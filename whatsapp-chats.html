@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Clone App · Chats</title>
+    <title>clone app · Chats</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,7 +14,7 @@
         }
 
         body {
-            background: #1a1a2e;
+            background: #0D1117;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -27,7 +27,7 @@
             width: 100%;
             max-width: 480px;
             height: 100vh;
-            background: #16213e;
+            background: #161B22;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -36,9 +36,10 @@
         }
 
         .clone-header {
-            background: #0f3460;
+            background: #161B22;
             padding: 18px 18px 8px 18px;
-            color: white;
+            color: #F0F6FC;
+            border-bottom: 1px solid #21262D;
         }
 
         .header-top {
@@ -58,6 +59,7 @@
             display: flex;
             gap: 20px;
             font-size: 20px;
+            color: #C9D1D9;
         }
 
         .header-icons i {
@@ -68,35 +70,35 @@
             display: flex;
             margin-top: 8px;
             gap: 24px;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid #21262D;
         }
 
         .clone-tab {
             padding: 8px 0 12px 0;
             font-size: 15px;
             font-weight: 600;
-            color: rgba(255,255,255,0.7);
+            color: #8B949E;
             position: relative;
             cursor: pointer;
         }
 
         .clone-tab.active {
-            color: white;
+            color: #F0F6FC;
         }
 
         .clone-tab.active::after {
             content: '';
             position: absolute;
-            bottom: -2px;
+            bottom: -1px;
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #e94560;
+            background-color: #2F81F7;
             border-radius: 2px;
         }
 
         .badge {
-            background-color: #e94560;
+            background-color: #238636;
             color: white;
             font-size: 11px;
             font-weight: 700;
@@ -106,20 +108,20 @@
         }
 
         .search-section {
-            background: #16213e;
+            background: #161B22;
             padding: 10px 16px;
-            border-bottom: 1px solid #1e4976;
+            border-bottom: 1px solid #21262D;
         }
 
         .clone-search {
-            background-color: #0f3460;
+            background-color: #0D1117;
             border-radius: 24px;
             padding: 8px 16px;
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #94a3b8;
-            border: 1px solid #1e4976;
+            color: #6E7681;
+            border: 1px solid #21262D;
         }
 
         .clone-search i {
@@ -131,19 +133,19 @@
             border: none;
             width: 100%;
             font-size: 15px;
-            color: white;
+            color: #F0F6FC;
             outline: none;
         }
 
         .clone-search input::placeholder {
-            color: #94a3b8;
+            color: #6E7681;
         }
 
         .chats-wrapper {
             flex: 1;
             position: relative;
             overflow-y: auto;
-            background: #16213e;
+            background: #161B22;
         }
 
         .chat-list {
@@ -164,7 +166,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(22, 33, 62, 0.98);
+            background: rgba(22, 27, 34, 0.98);
+            backdrop-filter: blur(2px);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -185,18 +188,18 @@
         .clone-loading-spinner {
             width: 48px;
             height: 48px;
-            border: 4px solid #1e4976;
-            border-top: 4px solid #e94560;
+            border: 4px solid #21262D;
+            border-top: 4px solid #2F81F7;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 18px;
         }
 
         .loading-text {
-            color: white;
+            color: #F0F6FC;
             font-size: 16px;
             font-weight: 500;
-            background: #0f3460;
+            background: #21262D;
             padding: 6px 20px;
             border-radius: 40px;
         }
@@ -212,18 +215,18 @@
             padding: 12px 16px;
             cursor: pointer;
             transition: background 0.15s;
-            border-bottom: 1px solid #1e4976;
+            border-bottom: 1px solid #21262D;
         }
 
         .chat-item:hover {
-            background-color: #0f3460;
+            background-color: #21262D;
         }
 
         .chat-avatar {
             width: 52px;
             height: 52px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #e94560 0%, #0f3460 100%);
+            background: #238636;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -248,7 +251,7 @@
 
         .chat-name {
             font-weight: 700;
-            color: white;
+            color: #F0F6FC;
             font-size: 16px;
             white-space: nowrap;
             overflow: hidden;
@@ -257,7 +260,7 @@
         }
 
         .chat-time {
-            color: #94a3b8;
+            color: #6E7681;
             font-size: 11px;
             white-space: nowrap;
             margin-left: 8px;
@@ -267,7 +270,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            color: #94a3b8;
+            color: #8B949E;
             font-size: 13px;
         }
 
@@ -281,7 +284,7 @@
         .unread-dot {
             width: 10px;
             height: 10px;
-            background-color: #e94560;
+            background-color: #2F81F7;
             border-radius: 50%;
             display: inline-block;
             margin-left: 6px;
@@ -291,16 +294,16 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            background: #0f3460;
+            background: #161B22;
             padding: 8px 12px 12px;
-            border-top: 1px solid #1e4976;
+            border-top: 1px solid #21262D;
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #94a3b8;
+            color: #8B949E;
             cursor: pointer;
             gap: 4px;
             font-size: 12px;
@@ -312,7 +315,7 @@
         }
 
         .nav-item.active {
-            color: #e94560;
+            color: #2F81F7;
         }
 
         .clone-fab {
@@ -321,7 +324,7 @@
             right: 20px;
             width: 56px;
             height: 56px;
-            background: #e94560;
+            background: #238636;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -360,38 +363,38 @@
         }
 
         .modal-content {
-            background-color: #16213e;
+            background-color: #161B22;
             border-radius: 28px;
             padding: 28px 24px;
             max-width: 320px;
             width: 85%;
             text-align: center;
             box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5);
-            border: 1px solid #1e4976;
+            border: 1px solid #21262D;
         }
 
         .modal-icon {
             font-size: 54px;
-            color: #94a3b8;
+            color: #8B949E;
             margin-bottom: 16px;
         }
 
         .modal-title {
             font-size: 20px;
             font-weight: 700;
-            color: white;
+            color: #F0F6FC;
             margin-bottom: 12px;
         }
 
         .modal-text {
-            color: #94a3b8;
+            color: #8B949E;
             font-size: 14px;
             line-height: 1.4;
             margin-bottom: 28px;
         }
 
         .modal-button {
-            background: #e94560;
+            background: #238636;
             border: none;
             padding: 12px 0;
             width: 100%;
@@ -407,7 +410,7 @@
 <div class="clone-app">
     <div class="clone-header">
         <div class="header-top">
-            <div class="clone-title">Clone App</div>
+            <div class="clone-title">clone app</div>
             <div class="header-icons">
                 <i class="fas fa-camera"></i>
                 <i class="fas fa-search"></i>
@@ -489,4 +492,182 @@
             "Can you help me with something? 🙏",
             "What do you think about this?",
             "Beautiful weather today! ☀️",
-            "Don't forget about the deadline
+            "Don't forget about the deadline tomorrow",
+            "Want to grab lunch? 🍕",
+            "I finished the report ✅",
+            "Can we reschedule?",
+            "That concert was amazing! 🎵",
+            "Any plans for the weekend?",
+            "The new restaurant is great 🍽️",
+            "On my way! 🚶",
+            "Let's discuss this later",
+            "Happy Birthday! 🎂",
+            "See you soon! 👋"
+        ];
+        
+        function getRandomTime() {
+            const randomHour = Math.floor(Math.random() * 12) + 1;
+            const randomMinute = Math.floor(Math.random() * 60);
+            const ampm = randomHour >= 12 ? 'PM' : 'AM';
+            const hour12 = randomHour % 12 || 12;
+            const minuteStr = randomMinute < 10 ? '0' + randomMinute : randomMinute;
+            const isYesterday = Math.random() > 0.7;
+            if (isYesterday) return `Yesterday`;
+            return `${hour12}:${minuteStr} ${ampm}`;
+        }
+        
+        function getRandomPreview() {
+            return msgPool[Math.floor(Math.random() * msgPool.length)];
+        }
+        
+        function getInitials(name) {
+            return name.split(' ').map(word => word[0]).join('').toUpperCase().slice(0,2);
+        }
+        
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        function buildChatList() {
+            const container = document.getElementById('chatListContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            contactNames.forEach((name, idx) => {
+                const previewText = getRandomPreview();
+                const time = getRandomTime();
+                const hasUnread = idx < 3 ? true : (idx === 5 ? true : false);
+                const initials = getInitials(name);
+                
+                const chatDiv = document.createElement('div');
+                chatDiv.className = 'chat-item';
+                chatDiv.setAttribute('data-name', name);
+                
+                chatDiv.innerHTML = `
+                    <div class="chat-avatar">${escapeHtml(initials)}</div>
+                    <div class="chat-info">
+                        <div class="chat-row">
+                            <div class="chat-name">${escapeHtml(name)}</div>
+                            <div class="chat-time">${time}</div>
+                        </div>
+                        <div class="message-preview">
+                            <div class="preview-text">${escapeHtml(previewText)}</div>
+                            ${hasUnread ? '<span class="unread-dot"></span>' : ''}
+                        </div>
+                    </div>
+                `;
+                
+                chatDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const modal = document.getElementById('modalOverlay');
+                    if (modal) modal.classList.add('active');
+                });
+                
+                container.appendChild(chatDiv);
+            });
+        }
+        
+        let loadingTimeout;
+        
+        function startLoading() {
+            const overlay = document.getElementById('cloneLoadingOverlay');
+            if (overlay) overlay.classList.add('active');
+            const listElem = document.querySelector('.chat-list');
+            if (listElem) listElem.classList.add('blurred');
+        }
+        
+        function finishLoading() {
+            const overlay = document.getElementById('cloneLoadingOverlay');
+            if (overlay) overlay.classList.remove('active');
+            const listElem = document.querySelector('.chat-list');
+            if (listElem) listElem.classList.remove('blurred');
+        }
+        
+        function initApp() {
+            buildChatList();
+            startLoading();
+            
+            loadingTimeout = setTimeout(() => {
+                buildChatList();
+                finishLoading();
+            }, LOADING_DURATION_MS);
+        }
+        
+        const modal = document.getElementById('modalOverlay');
+        const closeBtn = document.getElementById('closeModalBtn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+        }
+        
+        const fab = document.getElementById('fabNewChat');
+        if (fab) {
+            fab.addEventListener('click', () => {
+                alert("📱 Start a new chat — This would open contact picker.");
+            });
+        }
+        
+        const tabs = document.querySelectorAll('.clone-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                if (this.innerText.includes('Status')) {
+                    alert("📸 Status updates — feature demo.");
+                } else if (this.innerText.includes('Calls')) {
+                    alert("📞 Calls log — feature demo.");
+                }
+            });
+        });
+        
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                const navType = this.getAttribute('data-nav');
+                if (navType === 'updates') alert("Updates & channels");
+                else if (navType === 'communities') alert("Communities");
+                else if (navType === 'calls') alert("Call history");
+            });
+        });
+        
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const chatItems = document.querySelectorAll('.chat-item');
+                chatItems.forEach(item => {
+                    const nameElem = item.querySelector('.chat-name');
+                    if (nameElem) {
+                        const name = nameElem.innerText.toLowerCase();
+                        if (query === '' || name.includes(query)) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        }
+        
+        window.addEventListener('beforeunload', function() {
+            if (loadingTimeout) clearTimeout(loadingTimeout);
+        });
+        
+        initApp();
+    })();
+</script>
+</body>
+</html>
