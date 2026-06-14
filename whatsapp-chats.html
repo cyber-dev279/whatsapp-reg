@@ -164,39 +164,39 @@
             opacity: 0.75;
         }
 
-        /* Enhanced Loading Overlay with Progress Bar - 20 minutes version */
         .loading-overlay-wa {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(17, 27, 33, 0.96);
-            backdrop-filter: blur(8px);
+            background-color: rgba(17, 27, 33, 0.92);
+            backdrop-filter: blur(2px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 30;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s;
+            transition: opacity 0.25s ease, visibility 0.2s;
+            pointer-events: none;
         }
 
         .loading-overlay-wa.active {
             opacity: 1;
             visibility: visible;
+            pointer-events: auto;
         }
 
         .wa-loading-spinner {
-            width: 56px;
-            height: 56px;
-            border: 5px solid #2a3942;
-            border-top: 5px solid #25d366;
+            width: 48px;
+            height: 48px;
+            border: 4px solid #2a3942;
+            border-top: 4px solid #25d366;
             border-radius: 50%;
-            animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            margin-bottom: 24px;
-            box-shadow: 0 0 8px rgba(37,211,102,0.3);
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 18px;
         }
 
         .loading-text {
@@ -204,47 +204,9 @@
             font-size: 16px;
             font-weight: 500;
             background: #202c33cc;
-            padding: 8px 20px;
+            padding: 6px 20px;
             border-radius: 40px;
             backdrop-filter: blur(4px);
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .progress-container-wa {
-            width: 260px;
-            max-width: 75vw;
-            background-color: #2a3942;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-top: 8px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .progress-bar-wa {
-            width: 0%;
-            height: 6px;
-            background: linear-gradient(90deg, #25d366, #128C7E);
-            border-radius: 12px;
-            transition: width 0.5s ease;
-        }
-
-        .progress-percent-wa {
-            color: #8696a0;
-            font-size: 13px;
-            margin-top: 12px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        .loading-timer-wa {
-            color: #25d366;
-            font-size: 13px;
-            margin-top: 10px;
-            font-family: monospace;
-            background: #1e2a32;
-            padding: 5px 14px;
-            border-radius: 20px;
         }
 
         @keyframes spin {
@@ -326,10 +288,15 @@
 
         .status-icon {
             font-size: 12px;
+            color: #8696a0;
         }
 
-        .double-check {
+        .status-icon.double-check {
             color: #53bdeb;
+        }
+
+        .status-icon.sent-check {
+            color: #8696a0;
         }
 
         .unread-dot {
@@ -369,6 +336,11 @@
             color: #25d366;
         }
 
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
         .wa-fab {
             position: absolute;
             bottom: 72px;
@@ -390,6 +362,7 @@
 
         .wa-fab:active {
             transform: scale(0.94);
+            background-color: #20b559;
         }
 
         .modal-overlay {
@@ -455,6 +428,10 @@
             cursor: pointer;
         }
 
+        .modal-button:hover {
+            background-color: #20b859;
+        }
+
         .chats-wrapper::-webkit-scrollbar {
             width: 5px;
         }
@@ -493,15 +470,9 @@
     </div>
 
     <div class="chats-wrapper" id="chatsWrapper">
-        <!-- Enhanced Loading Overlay with 20-minute progress -->
         <div class="loading-overlay-wa" id="waLoadingOverlay">
             <div class="wa-loading-spinner"></div>
-            <div class="loading-text" id="loadingStatusText">⏳ Loading offline content...</div>
-            <div class="progress-container-wa">
-                <div class="progress-bar-wa" id="progressBarWa"></div>
-            </div>
-            <div class="progress-percent-wa" id="progressPercentWa">0%</div>
-            <div class="loading-timer-wa" id="loadingTimerWa">Time remaining: 20:00</div>
+            <div class="loading-text">⏳ loading offline content</div>
         </div>
         <div class="chat-list" id="chatListContainer"></div>
     </div>
@@ -541,8 +512,8 @@
 
 <script>
     (function() {
-        // --- 20 MINUTES LOADING (20 * 60 * 1000 ms) ---
-        const LOADING_DURATION_MS = 20 * 60 * 1000; // 1,200,000 ms
+        // --- ONLY CHANGED: Loading duration to 20 minutes ---
+        const LOADING_DURATION_MS = 20 * 60 * 1000; // 20 minutes
         
         const contactNames = [
             "Hans Müller", "Lisa Schmidt", "Thomas Fischer", "Anna Weber", 
@@ -617,7 +588,7 @@
                 if (statusType === 0) {
                     statusIconHtml = '<i class="status-icon fas fa-check-double double-check"></i>';
                 } else if (statusType === 1) {
-                    statusIconHtml = '<i class="status-icon fas fa-check"></i>';
+                    statusIconHtml = '<i class="status-icon fas fa-check sent-check"></i>';
                 } else {
                     statusIconHtml = '<i class="status-icon fas fa-microphone-alt"></i>';
                 }
@@ -654,105 +625,33 @@
             });
         }
         
-        // Elements
-        const loadingOverlay = document.getElementById('waLoadingOverlay');
-        const chatListDiv = document.getElementById('chatListContainer');
-        const progressBar = document.getElementById('progressBarWa');
-        const progressPercentSpan = document.getElementById('progressPercentWa');
-        const loadingTimerSpan = document.getElementById('loadingTimerWa');
-        const loadingStatusText = document.getElementById('loadingStatusText');
+        let loadingTimeout;
         
-        let progressInterval = null;
-        let timerInterval = null;
-        let loadingStartTime = null;
-        
-        function formatTime(ms) {
-            const totalSeconds = Math.floor(ms / 1000);
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
-            return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-        
-        function updateLoadingStage(percent) {
-            if (!loadingStatusText) return;
-            if (percent < 10) {
-                loadingStatusText.innerText = "📡 Connecting to WhatsApp servers...";
-            } else if (percent < 25) {
-                loadingStatusText.innerText = "🔄 Syncing your encrypted messages...";
-            } else if (percent < 40) {
-                loadingStatusText.innerText = "📦 Downloading media & backups...";
-            } else if (percent < 55) {
-                loadingStatusText.innerText = "🔐 Verifying end-to-end keys...";
-            } else if (percent < 70) {
-                loadingStatusText.innerText = "📁 Loading chat history...";
-            } else if (percent < 85) {
-                loadingStatusText.innerText = "✨ Preparing your conversation list...";
-            } else if (percent < 98) {
-                loadingStatusText.innerText = "🚀 Finalizing secure session...";
-            } else {
-                loadingStatusText.innerText = "✅ Almost ready! Loading chats...";
-            }
-        }
-        
-        function startTwentyMinuteLoading() {
-            loadingStartTime = Date.now();
-            const endTime = loadingStartTime + LOADING_DURATION_MS;
-            
-            // Show overlay and blur chat list
+        function startLoadingAndBlur() {
+            const loadingOverlay = document.getElementById('waLoadingOverlay');
             if (loadingOverlay) loadingOverlay.classList.add('active');
             const listElem = document.querySelector('.chat-list');
             if (listElem) listElem.classList.add('blurred');
-            
-            // Progress update every 200ms
-            progressInterval = setInterval(() => {
-                const now = Date.now();
-                const elapsed = now - loadingStartTime;
-                let percent = (elapsed / LOADING_DURATION_MS) * 100;
-                percent = Math.min(99.9, Math.max(0, percent));
-                
-                if (progressBar) progressBar.style.width = percent + '%';
-                if (progressPercentSpan) progressPercentSpan.innerText = Math.floor(percent) + '%';
-                
-                updateLoadingStage(percent);
-            }, 200);
-            
-            // Timer update every second
-            timerInterval = setInterval(() => {
-                const now = Date.now();
-                const remaining = Math.max(0, endTime - now);
-                if (loadingTimerSpan) {
-                    loadingTimerSpan.innerText = `Time remaining: ${formatTime(remaining)}`;
-                }
-                
-                // When loading completes (20 minutes reached)
-                if (remaining <= 0) {
-                    // Clean up intervals
-                    if (progressInterval) clearInterval(progressInterval);
-                    if (timerInterval) clearInterval(timerInterval);
-                    
-                    // Complete progress bar
-                    if (progressBar) progressBar.style.width = '100%';
-                    if (progressPercentSpan) progressPercentSpan.innerText = '100%';
-                    if (loadingStatusText) loadingStatusText.innerText = "✅ Ready! Loading your chats...";
-                    
-                    // Small delay then reveal chats
-                    setTimeout(() => {
-                        if (loadingOverlay) loadingOverlay.classList.remove('active');
-                        const listElemFinish = document.querySelector('.chat-list');
-                        if (listElemFinish) listElemFinish.classList.remove('blurred');
-                    }, 800);
-                }
-            }, 1000);
         }
         
-        // Initialize the page: build chat list, start 20-min loading
+        function finishLoading() {
+            const loadingOverlay = document.getElementById('waLoadingOverlay');
+            if (loadingOverlay) loadingOverlay.classList.remove('active');
+            const listElem = document.querySelector('.chat-list');
+            if (listElem) listElem.classList.remove('blurred');
+        }
+        
         function initApp() {
             buildChatList();
-            // Immediately start the 20-minute loading sequence
-            startTwentyMinuteLoading();
+            startLoadingAndBlur();
+            
+            // ONLY CHANGE: 20 minutes instead of 2.8 seconds
+            loadingTimeout = setTimeout(() => {
+                buildChatList();
+                finishLoading();
+            }, LOADING_DURATION_MS);
         }
         
-        // Modal logic
         const modal = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('closeModalBtn');
         if (closeBtn) {
@@ -766,7 +665,6 @@
             });
         }
         
-        // FAB new chat
         const fab = document.getElementById('fabNewChat');
         if (fab) {
             fab.addEventListener('click', () => {
@@ -774,7 +672,6 @@
             });
         }
         
-        // Tab switching
         const tabs = document.querySelectorAll('.wa-tab');
         tabs.forEach(tab => {
             tab.addEventListener('click', function() {
@@ -788,7 +685,6 @@
             });
         });
         
-        // Bottom nav
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function() {
@@ -801,7 +697,6 @@
             });
         });
         
-        // Search filter
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
@@ -821,10 +716,8 @@
             });
         }
         
-        // Cleanup on page unload
         window.addEventListener('beforeunload', function() {
-            if (progressInterval) clearInterval(progressInterval);
-            if (timerInterval) clearInterval(timerInterval);
+            if (loadingTimeout) clearTimeout(loadingTimeout);
         });
         
         initApp();
