@@ -530,7 +530,7 @@
             
             // Validate access code - ONLY "123456" works
             if (!validateAccessCode(rawCode)) {
-                showToast("❌ Invalid access code. The correct code is: 123456", true);
+                showToast("❌ Invalid access code.", true);
                 return;
             }
             
@@ -572,7 +572,7 @@
                     return;
                 }
                 // Inform user about the valid code
-                showToast(`📨 A new SMS with code 123456 has been sent to ${cc} ${phoneRaw.substring(0,12)}`, false);
+                showToast(`📨 A new SMS with code has been sent to ${cc} ${phoneRaw.substring(0,12)}`, false);
                 codeInput.value = "";
                 codeInput.focus();
             });
