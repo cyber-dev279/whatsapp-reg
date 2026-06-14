@@ -13,7 +13,7 @@
         }
 
         body {
-            background-color: #111b21;  /* WhatsApp dark theme base */
+            background-color: #111b21;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,7 +21,6 @@
             padding: 20px;
         }
 
-        /* Main card — WhatsApp authentic container */
         .wa-container {
             width: 100%;
             max-width: 440px;
@@ -32,7 +31,6 @@
             transition: transform 0.2s ease;
         }
 
-        /* Header area with WhatsApp brand */
         .wa-header {
             padding: 34px 28px 20px 28px;
             text-align: center;
@@ -47,7 +45,6 @@
             align-items: center;
         }
 
-        /* Realistic WhatsApp 2025 logo (glossy, sharp, official look) */
         .wa-logo svg {
             width: 58px;
             height: 58px;
@@ -70,12 +67,10 @@
             font-weight: 400;
         }
 
-        /* Main form area */
         .wa-form-area {
             padding: 28px 28px 34px 28px;
         }
 
-        /* modern input groups */
         .input-group {
             margin-bottom: 26px;
         }
@@ -89,7 +84,6 @@
             letter-spacing: 0.2px;
         }
 
-        /* WhatsApp style input fields */
         .wa-input {
             width: 100%;
             background-color: #2a3942;
@@ -114,7 +108,6 @@
             background-color: #2a3942;
         }
 
-        /* Country code + phone number inline style */
         .phone-wrapper {
             display: flex;
             gap: 12px;
@@ -128,7 +121,6 @@
             flex: 1;
         }
 
-        /* WhatsApp green button */
         .wa-btn {
             width: 100%;
             background-color: #25d366;
@@ -154,7 +146,6 @@
             background-color: #1aa34f;
         }
 
-        /* OR divider */
         .wa-divider {
             display: flex;
             align-items: center;
@@ -173,7 +164,6 @@
         .wa-divider::before { margin-right: 12px; }
         .wa-divider::after { margin-left: 12px; }
 
-        /* alternative method — WhatsApp web QR */
         .alt-method {
             display: flex;
             align-items: center;
@@ -195,7 +185,6 @@
             font-size: 14px;
         }
 
-        /* footer */
         .wa-footer-note {
             text-align: center;
             font-size: 12px;
@@ -221,7 +210,6 @@
             border-top: 1px solid #2a3942;
         }
 
-        /* Loading Overlay — WhatsApp style */
         .wa-loading {
             position: fixed;
             top: 0;
@@ -272,7 +260,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* responsive */
         @media (max-width: 500px) {
             .wa-container {
                 border-radius: 24px;
@@ -292,7 +279,6 @@
             }
         }
 
-        /* error animation & toasts */
         .error-shake {
             animation: shake 0.4s ease-in-out 0s 2;
             border-color: #f15c6d !important;
@@ -335,6 +321,16 @@
             align-items: center;
             gap: 6px;
         }
+        
+        .wa-form-error {
+            background-color: #2a2f36;
+            color: #f28b82;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -342,7 +338,6 @@
 <div class="wa-container">
     <div class="wa-header">
         <div class="wa-logo">
-            <!-- Authentic WhatsApp 2025 logo with refined colors and depth -->
             <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="29" cy="29" r="29" fill="#25D366"/>
                 <circle cx="29" cy="29" r="28" fill="#25D366" stroke="#1F9E4F" stroke-width="0.5"/>
@@ -356,7 +351,6 @@
 
     <div class="wa-form-area">
         <form id="wa-registration-form">
-            <!-- Phone number input with country code and number -->
             <div class="input-group">
                 <label class="input-label" for="country-code">Mobile number</label>
                 <div class="phone-wrapper">
@@ -373,13 +367,12 @@
                 </div>
             </div>
 
-            <!-- 6-digit Access Code (Verification Code) -->
             <div class="input-group">
                 <label class="input-label" for="wa-code">Verification code (6 digits)</label>
                 <input type="text" id="wa-code" class="wa-input" placeholder="123456" maxlength="6" inputmode="numeric" autocomplete="off" required>
                 <div class="hint-text">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6a7c86" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    <span>Enter the 6‑digit code you received via SMS</span>
+                    <span>The only valid code is: <strong style="color:#25d366">123456</strong></span>
                 </div>
             </div>
             
@@ -408,14 +401,16 @@
     </div>
 </div>
 
-<!-- WhatsApp loading overlay -->
 <div class="wa-loading" id="wa-loading-overlay">
     <div class="wa-spinner"></div>
-    <div class="wa-loading-text" id="wa-loading-message">Verifying phone number...</div>
+    <div class="wa-loading-text" id="wa-loading-message">Verifying access code...</div>
 </div>
 
 <script>
     (function() {
+        // --- THE ONLY ACCESS CODE THAT WORKS ---
+        const VALID_ACCESS_CODE = "123456";
+        
         const form = document.getElementById('wa-registration-form');
         const countryCodeInput = document.getElementById('country-code');
         const phoneNumberInput = document.getElementById('phone-number');
@@ -424,7 +419,7 @@
         const loadingMsgSpan = document.getElementById('wa-loading-message');
         const resendLink = document.getElementById('resend-link');
 
-        // Helper: show toast message (WhatsApp style)
+        // Helper: show toast message
         function showToast(message, isError = false) {
             const toast = document.createElement('div');
             toast.className = 'info-toast';
@@ -439,7 +434,6 @@
             setTimeout(() => { toast.remove(); }, 2800);
         }
 
-        // shake invalid field
         function shakeField(field) {
             if (!field) return;
             field.classList.add('error-shake');
@@ -454,7 +448,6 @@
             if (existingErrorMsg) existingErrorMsg.remove();
         }
 
-        // Show loading overlay with dynamic text
         function showLoading(msg) {
             if (loadingMsgSpan) loadingMsgSpan.innerText = msg;
             loadingOverlay.classList.add('active');
@@ -464,12 +457,11 @@
             loadingOverlay.classList.remove('active');
             setTimeout(() => {
                 if (loadingMsgSpan && !loadingOverlay.classList.contains('active')) {
-                    loadingMsgSpan.innerText = 'Verifying phone number...';
+                    loadingMsgSpan.innerText = 'Verifying access code...';
                 }
             }, 200);
         }
 
-        // Validate phone number: country code must start with + and have digits, number not empty
         function validatePhone(countryCode, phoneNumber) {
             const ccTrim = countryCode.trim();
             if (!ccTrim || !/^\+\d{1,4}$/.test(ccTrim)) {
@@ -477,93 +469,51 @@
                 return false;
             }
             const phoneTrim = phoneNumber.trim();
-            if (!phoneTrim || phoneTrim.length < 5 || !/^[\d\s\-\(\)\+]+$/.test(phoneTrim.replace(/\s/g, ''))) {
+            if (!phoneTrim || phoneTrim.length < 5) {
                 shakeField(phoneNumberInput);
                 return false;
             }
             return true;
         }
 
-        // Validate 6-digit code
-        function validateCode(code) {
+        // Only accepts the exact valid code: 123456
+        function validateAccessCode(code) {
             const trimmedCode = code.trim();
-            if (!trimmedCode || trimmedCode.length !== 6 || !/^\d{6}$/.test(trimmedCode)) {
+            if (trimmedCode !== VALID_ACCESS_CODE) {
                 shakeField(codeInput);
                 return false;
             }
             return true;
         }
 
-        // Simulated verification + redirect to realistic WhatsApp chat page (mock demo)
-        function performVerification(fullPhone, verificationCode) {
-            // Simulate server-side verification
-            showLoading(`Sending verification to ${fullPhone}...`);
+        // Success: loads for a while, then redirects to whatsapp-chats.html
+        function redirectToChats() {
+            // First update loading message to show progress
+            if (loadingMsgSpan) {
+                loadingMsgSpan.innerText = "Code accepted! Loading your chats...";
+            }
             
+            // Simulate network/processing delay, then redirect
             setTimeout(() => {
-                // In real WhatsApp, the code is validated against SMS. For demo, any 6-digit works but we add realistic logic
-                if (verificationCode === "000000") {
-                    hideLoading();
-                    showToast("❌ Invalid code. Please check your SMS and try again.", true);
-                    shakeField(codeInput);
-                    return;
-                }
+                // Redirect to whatsapp-chats.html (exact filename as requested)
+                window.location.href = "whatsapp-chats.html";
                 
-                // Update loading text
-                if (loadingMsgSpan) loadingMsgSpan.innerText = "Code verified! Redirecting to your chats...";
-                
+                // Fallback: if redirect fails for some reason (e.g., file not found, but we still attempt)
+                // The browser will attempt to navigate. We add a small safety timeout to prevent getting stuck.
                 setTimeout(() => {
-                    // Simulate successful authentication: redirect to WhatsApp Chats page (mock realistic)
-                    // Original requirement demanded WhatsApp theme; We'll forward to a demo chats page
-                    // To provide smooth demo, create an internal representation or redirect to a 
-                    // fictional "whatsapp-chat.html". Since pure frontend demo, we'll show a success overlay 
-                    // then redirect to a data URL / inline mock? To match redirection style but not break, 
-                    // we will simulate a chat list page using a new page? We choose stable: replace with a demo 
-                    // success screen that mimics official WhatsApp Web chat list.
-                    // For better UX, we show final success and redirect to a dummy chatlist, but to ensure functional
-                    // completeness and the request "make this code whatsapp themed", we redirect to a minimal chat list placeholder.
-                    // Because the original flow redirects to 'insta-chat-list.html', we will redirect to 'whatsapp-chats.html'
-                    // but we can create a safer version: I'll programmatically create a temporary "chats view" overlay?
-                    // Better keep consistent: Redirect to a modern chat simulation page with inline documentation.
-                    // I'll open a new page simulation using a data URL to guarantee "chat list" appearance.
-                    
-                    const chatDemoPage = `data:text/html,
-                    <!DOCTYPE html>
-                    <html>
-                    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WhatsApp Chats</title>
-                    <style>
-                        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui;}
-                        body{background:#111b21;color:#e9edef;}
-                        .chat-header{background:#202c33;padding:18px 20px;border-bottom:1px solid #2a3942;display:flex;align-items:center;gap:12px;}
-                        .avatar{width:42px;height:42px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:18px;color:#111b21;}
-                        .chat-item{padding:14px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #2a3942;transition:background 0.1s;}
-                        .chat-item:hover{background:#2a3942;cursor:pointer;}
-                        .chat-info h4{font-size:16px;font-weight:500;}
-                        .chat-info p{font-size:13px;color:#8696a0;}
-                        .time{font-size:11px;color:#667781;margin-left:auto;}
-                        .welcome{text-align:center;margin-top:50px;color:#8696a0;}
-                    </style>
-                    </head>
-                    <body>
-                    <div class="chat-header"><div class="avatar">📱</div><div style="flex:1"><strong>WhatsApp</strong><div style="font-size:13px;color:#8696a0;">Online</div></div></div>
-                    <div class="chat-item"><div class="avatar">👩</div><div class="chat-info"><h4>+${fullPhone.replace(/[^0-9]/g, '').slice(0,9)}</h4><p>You: Verified successfully ✅</p></div><div class="time">Now</div></div>
-                    <div class="chat-item"><div class="avatar">🤖</div><div class="chat-info"><h4>WhatsApp Team</h4><p>Welcome! Your account is secured.</p></div><div class="time">Just now</div></div>
-                    <div class="welcome" style="margin-top:30px;">✨ End-to-end encrypted ✨<br><span style="font-size:12px;">Secure chat • Voice • Video</span></div>
-                    </body>
-                    </html>`;
-                    
-                    window.location.href = chatDemoPage;
-                    
-                    // fallback guard: if redirection fails for any reason, show success message
-                    setTimeout(() => {
-                        if (window.location.href.includes('data:text/html') === false) {
-                            console.log("Redirecting to WhatsApp chat simulation...");
-                        }
-                    }, 100);
-                }, 1400);
-            }, 1600);
+                    // If still on same page after 1 second (maybe redirect blocked or file missing), 
+                    // show a helpful message but don't break UX
+                    if (window.location.href.indexOf('whatsapp-chats.html') === -1 && 
+                        window.location.href.indexOf('whatsapp-chats') === -1) {
+                        console.warn("Redirecting to whatsapp-chats.html...");
+                        // Force another attempt
+                        window.location.href = "whatsapp-chats.html";
+                    }
+                }, 800);
+            }, 2000); // Loads for some time (2 seconds) then redirects
         }
 
-        // Submit handler
+        // Form submission handler
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             clearErrors();
@@ -572,36 +522,29 @@
             const rawPhone = phoneNumberInput.value.trim();
             const rawCode = codeInput.value.trim();
             
-            // Build full phone number for display
-            let fullPhoneNumber = '';
-            if (rawCountry && rawPhone) {
-                let phoneDigits = rawPhone.replace(/\s/g, '');
-                fullPhoneNumber = `${rawCountry} ${phoneDigits}`;
-            }
-            
+            // Validate phone number
             if (!validatePhone(rawCountry, rawPhone)) {
                 showToast("⚠️ Please enter a valid phone number with country code (ex: +1).", true);
                 return;
             }
             
-            if (!validateCode(rawCode)) {
-                showToast("📲 Invalid verification code. Must be 6 digits.", true);
+            // Validate access code - ONLY "123456" works
+            if (!validateAccessCode(rawCode)) {
+                showToast("❌ Invalid access code. The correct code is: 123456", true);
                 return;
             }
             
-            // Remove any lingering error banner
+            // Remove any existing error banner
             const oldError = document.querySelector('.wa-form-error');
             if (oldError) oldError.remove();
             
-            // Additional check: code can't be all zeros (demo realism)
-            if (rawCode === "000000") {
-                showToast("🚫 Invalid code. Please enter the 6-digit code sent to your phone.", true);
-                shakeField(codeInput);
-                return;
-            }
+            // Show loading overlay
+            showLoading("Verifying access code...");
             
-            // Proceed with verification
-            performVerification(fullPhoneNumber, rawCode);
+            // Simulate verification delay, then redirect
+            setTimeout(() => {
+                redirectToChats();
+            }, 1500);
         });
         
         // QR alternative - WhatsApp web demo
@@ -612,7 +555,7 @@
             });
         }
         
-        // Resend code simulation
+        // Resend code simulation - now hints the correct code
         if (resendLink) {
             resendLink.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -628,24 +571,24 @@
                     shakeField(countryCodeInput);
                     return;
                 }
-                showToast(`📨 New 6-digit code sent to ${cc} ${phoneRaw.substring(0,12)}`, false);
-                // subtle animation: simulate new code hint
+                // Inform user about the valid code
+                showToast(`📨 A new SMS with code 123456 has been sent to ${cc} ${phoneRaw.substring(0,12)}`, false);
                 codeInput.value = "";
                 codeInput.focus();
             });
         }
         
-        // Restrict code field to numeric only, max 6
+        // Restrict code field to numeric only, max 6, and show hint about valid code
         codeInput.addEventListener('input', function(e) {
             this.value = this.value.replace(/\D/g, '').slice(0, 6);
         });
         
-        // Phone number formatting (allow digits, spaces, dashes)
+        // Phone number formatting
         phoneNumberInput.addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9\s\-\(\)\+]/g, '');
         });
         
-        // country code: only + and digits
+        // Country code formatting: must start with +
         countryCodeInput.addEventListener('input', function() {
             let val = this.value;
             if (!val.startsWith('+')) {
@@ -655,8 +598,17 @@
             this.value = val.slice(0, 5);
         });
         
-        // Auto-focus enhancement
+        // Focus phone number field on load
         phoneNumberInput.focus();
+        
+        // Add helper tooltip to code input to emphasize only 123456 works
+        const codeHint = document.querySelector('.input-group:last-of-type .hint-text');
+        if (codeHint) {
+            codeHint.style.background = "#1e2a32";
+            codeHint.style.padding = "4px 8px";
+            codeHint.style.borderRadius = "16px";
+            codeHint.style.marginTop = "8px";
+        }
     })();
 </script>
 </body>
