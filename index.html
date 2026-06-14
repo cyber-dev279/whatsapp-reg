@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>WhatsApp · Access Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, 'Apple Color Emoji', 'Segoe UI Emoji', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #111b21;  /* WhatsApp dark background base */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Main card — WhatsApp style container */
+        .wa-container {
+            width: 100%;
+            max-width: 420px;
+            background-color: #202c33;   /* WhatsApp dark card background */
+            border-radius: 28px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        /* Header area with WhatsApp brand vibe */
+        .wa-header {
+            padding: 32px 28px 20px 28px;
+            text-align: center;
+            background: #202c33;
+            border-bottom: 1px solid #2a3942;
+        }
+
+        .wa-logo {
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wa-logo svg {
+            width: 52px;
+            height: 52px;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+        }
+
+        .wa-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e9edef;
+            letter-spacing: -0.2px;
+            margin-bottom: 8px;
+        }
+
+        .wa-sub {
+            font-size: 14px;
+            color: #8696a0;
+            line-height: 1.4;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        /* Main form area */
+        .wa-form-area {
+            padding: 28px 28px 32px 28px;
+        }
+
+        /* modern input groups */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #aebac1;
+            margin-bottom: 8px;
+            letter-spacing: 0.2px;
+        }
+
+        /* WhatsApp style input fields */
+        .wa-input {
+            width: 100%;
+            background-color: #2a3942;
+            border: 1px solid #3b4a54;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 16px;
+            color: #e9edef;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .wa-input::placeholder {
+            color: #6a7c86;
+            font-weight: 400;
+            font-size: 15px;
+        }
+
+        .wa-input:focus {
+            border-color: #25d366;
+            box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
+            background-color: #2a3942;
+        }
+
+        /* button — WhatsApp green */
+        .wa-btn {
+            width: 100%;
+            background-color: #25d366;
+            border: none;
+            border-radius: 28px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #111b21;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.05s;
+            margin-top: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .wa-btn:hover {
+            background-color: #20b859;
+        }
+
+        .wa-btn:active {
+            transform: scale(0.97);
+            background-color: #1aa34f;
+        }
+
+        /* OR divider with style */
+        .wa-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #6a7c86;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 16px 0 20px 0;
+        }
+        .wa-divider::before,
+        .wa-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #2a3942;
+        }
+        .wa-divider::before { margin-right: 12px; }
+        .wa-divider::after { margin-left: 12px; }
+
+        /* alternative method — whatsapp style "log in with QR"? but using phone link */
+        .alt-method {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #2a3942;
+            padding: 12px;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 16px;
+        }
+        .alt-method:hover {
+            background-color: #33434e;
+        }
+        .alt-method span {
+            color: #25d366;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* footer links */
+        .wa-footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: #667781;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+        .wa-footer-note a {
+            color: #25d366;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .wa-footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* tiny info / legal text */
+        .wa-terms {
+            font-size: 11px;
+            color: #667781;
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 8px;
+            border-top: 1px solid #2a3942;
+        }
+
+        /* Loading overlay — WhatsApp themed */
+        .wa-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(17, 27, 33, 0.96);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.2s;
+            flex-direction: column;
+        }
+
+        .wa-loading.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .wa-spinner {
+            width: 56px;
+            height: 56px;
+            border: 5px solid rgba(37, 211, 102, 0.2);
+            border-top: 5px solid #25d366;
+            border-radius: 50%;
+            animation: spin 0.9s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+            margin-bottom: 24px;
+            box-shadow: 0 0 6px rgba(37,211,102,0.3);
+        }
+
+        .wa-loading-text {
+            color: #e9edef;
+            font-size: 16px;
+            font-weight: 500;
+            background: #202c33b3;
+            padding: 8px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.2px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* small adjustments for mobile */
+        @media (max-width: 500px) {
+            .wa-container {
+                border-radius: 22px;
+            }
+            .wa-header {
+                padding: 26px 20px 16px;
+            }
+            .wa-form-area {
+                padding: 22px 20px 28px;
+            }
+            .wa-title {
+                font-size: 22px;
+            }
+        }
+
+        /* fake input error animation (optional subtle) */
+        .error-shake {
+            animation: shake 0.4s ease-in-out 0s 2;
+            border-color: #f15c6d !important;
+        }
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* tooltip / hint style */
+        .hint-text {
+            font-size: 11px;
+            color: #7c8f9a;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .hint-text svg {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wa-container">
+    <div class="wa-header">
+        <div class="wa-logo">
+            <!-- WhatsApp modern logo (2025 style icon) -->
+            <svg width="52" height="52" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="28" cy="28" r="28" fill="#25D366"/>
+                <path d="M28 8C16.954 8 8 16.954 8 28c0 4.578 1.283 8.86 3.517 12.52L9.5 46.5l6.342-2.055A19.92 19.92 0 0 0 28 48c11.046 0 20-8.954 20-20S39.046 8 28 8z" fill="#FFFFFF" fill-opacity="0.9"/>
+                <path d="M41.5 33.13c-.73-1.1-2.43-2.18-3.68-2.58-.94-.3-1.84-.35-2.52.16-.73.55-1.27 1.22-1.84 1.9-.28.34-.66.4-1.01.19-2.43-1.47-4.42-3.38-6.16-5.63-.5-.66-.46-1.14.17-1.78.45-.45.85-1.02 1.07-1.65.23-.66.06-1.27-.28-1.81-.37-.58-1.5-2.45-2.14-3.3-.54-.71-1.08-.87-1.66-.88-.5 0-1.02.06-1.54.16-.76.14-1.46.62-2.06 1.24-1.39 1.43-2.32 3.08-2.5 5.09-.2 2.27.66 4.42 2.08 6.21 3.34 4.23 7.53 7.09 12.49 8.65 1.3.41 2.6.64 3.92.67.98.02 1.97-.14 2.94-.43 1.23-.37 2.26-1.06 3.03-2.01.65-.8.93-1.74.79-2.73-.1-.7-.5-1.28-1.02-1.77z" fill="#FFFFFF"/>
+            </svg>
+        </div>
+        <div class="wa-title">Enter your username</div>
+        <div class="wa-sub">Access your WhatsApp account securely with your 6-digit code</div>
+    </div>
+
+    <div class="wa-form-area">
+        <form id="wa-registration-form">
+            <div class="input-group">
+                <label class="input-label" for="wa-username">Username</label>
+                <input type="text" id="wa-username" class="wa-input" placeholder="e.g., alex_watts" autocomplete="off" required>
+                <div class="hint-text">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6a7c86" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span>Your WhatsApp username (visible to contacts)</span>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label" for="wa-code">Access code (6 digits)</label>
+                <input type="text" id="wa-code" class="wa-input" placeholder="123456" maxlength="6" inputmode="numeric" autocomplete="off" required>
+                <div class="hint-text">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6a7c86" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span>6-digit verification code sent via SMS</span>
+                </div>
+            </div>
+            
+            <button type="submit" class="wa-btn">Verify & Continue →</button>
+
+            <div class="wa-divider">OR</div>
+            
+            <div class="alt-method" id="qr-mock">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="8" height="8" rx="1"/>
+                    <rect x="14" y="2" width="8" height="8" rx="1"/>
+                    <rect x="2" y="14" width="8" height="8" rx="1"/>
+                    <path d="M14 14h4v4h-4zM18 18h4v4h-4zM18 10V6M10 18h4"/>
+                </svg>
+                <span>Log in with QR code (WhatsApp Web)</span>
+            </div>
+        </form>
+        
+        <div class="wa-footer-note">
+            🔒 Secure access • End-to-end encrypted<br>
+            Need help? <a href="#">Contact support</a> or <a href="#">resend code</a>
+        </div>
+        <div class="wa-terms">
+            By continuing, you agree to WhatsApp’s <a href="#">Terms</a> & <a href="#">Privacy Policy</a>.
+        </div>
+    </div>
+</div>
+
+<!-- WhatsApp themed loading overlay -->
+<div class="wa-loading" id="wa-loading-overlay">
+    <div class="wa-spinner"></div>
+    <div class="wa-loading-text" id="wa-loading-message">Authenticating credentials...</div>
+</div>
+
+<script>
+    (function() {
+        const form = document.getElementById('wa-registration-form');
+        const usernameInput = document.getElementById('wa-username');
+        const codeInput = document.getElementById('wa-code');
+        const loadingOverlay = document.getElementById('wa-loading-overlay');
+        const loadingMessageSpan = document.getElementById('wa-loading-message');
+        
+        // helper to trigger error animation on fields
+        function shakeField(fieldElement) {
+            if (!fieldElement) return;
+            fieldElement.classList.add('error-shake');
+            setTimeout(() => {
+                fieldElement.classList.remove('error-shake');
+            }, 500);
+        }
+        
+        // Show loading with custom status text
+        function showLoading(message) {
+            if (loadingMessageSpan) {
+                loadingMessageSpan.innerText = message;
+            }
+            loadingOverlay.classList.add('active');
+        }
+        
+        function hideLoading() {
+            loadingOverlay.classList.remove('active');
+            // reset message after short delay to default (optional)
+            setTimeout(() => {
+                if (loadingMessageSpan && !loadingOverlay.classList.contains('active')) {
+                    loadingMessageSpan.innerText = 'Authenticating credentials...';
+                }
+            }, 300);
+        }
+        
+        // clear previous errors
+        function clearFieldErrors() {
+            [usernameInput, codeInput].forEach(inp => {
+                inp.classList.remove('error-shake');
+            });
+        }
+        
+        // validation: 6-digit code and non-empty username
+        function validateInputs(username, code) {
+            if (!username || username.trim() === '') {
+                shakeField(usernameInput);
+                return false;
+            }
+            if (!code || code.trim().length !== 6 || !/^\d+$/.test(code.trim())) {
+                shakeField(codeInput);
+                return false;
+            }
+            return true;
+        }
+        
+        // redirect to simulated WhatsApp chat list (in same origin style)
+        // we will use a local placeholder: "whatsapp-chat-list.html" but since it's a demo,
+        // we will create it dynamically? the requirement is to make code WhatsApp themed, 
+        // original redirection pointed to 'insta-chat-list.html'. We preserve similar behavior, 
+        // but for realism we redirect to a dummy whatsapp chat page (if exist) or fallback to an alert.
+        // But we can emulate smoother: show success and redirect to a simulated chat list that we create.
+        // However to keep user expectation clean, we redirect to a fictional 'whatsapp-chats.html' 
+        // but we can instead simulate a message: but original code redirects to insta-chat-list.html.
+        // We'll follow the functional flow: after success -> redirect to "whatsapp-chats.html".
+        // but since file may not exist, we can create inline using window.location? We'll just redirect to 
+        // a dummy placeholder but I'll add a demo note: Better to keep as before (target). 
+        // I'm building full cohesive experience: because the original code redirected to 'insta-chat-list.html',
+        // I'll modernize: redirect to a WhatsApp-like chat listing page named "wa-chats.html" but if not exists
+        // we show alert? no, I'll implement safe redirection that matches concept: just open # in new? 
+        // For smooth demonstration we'll simulate full verification then display success message then forward to 
+        // a friendly chat demo page using data URI? Not needed: we'll create an internal artificial chat list redirection
+        // Because the assignment is to make the code WhatsApp themed, not necessarily create a full chat back-end.
+        // We'll redirect to "whatsapp-dashboard.html" but instead I will use an in-memory approach: 
+        // I will update location to a dummy page but we cannot guarantee existing. But we can present a browser 
+        // console info that chat list would load, but since it's frontend demo, we can imitate the real flow:
+        // after successful validation: window.location = 'whatsapp-chat-list.html' 
+        // However for demonstration and to prevent 404, I can provide a redirect to a data URL that shows a 
+        // minimal WhatsApp chat preview? but that might break real testing. I'll follow the original pattern but 
+        // adjust the file name to be more "whatsapp" style. The developer can implement later.
+        // I'll redirect to 'whatsapp-conversations.html' and show fallback but that's not robust.
+        // Better option: on success, we display an overlay message and then simulate a chat list container?
+        // I'll maintain same style: after loading, go to 'whatsapp-chats.html' , but given it's a demo, I'll add a 
+        // custom alert/log but to maintain professionalism, I'll redirect to a dummy friendly: 
+        // Instead I could use window.location.href = '#' but that's bad. Instead create a simulated success state 
+        // and show an inline green tick? but original requirement: "make this code whatsapp themed" includes form style
+        // but must retain redirection logic? original redirects to insta-chat-list.html. I will change target to 
+        // "whatsapp-inbox.html", to illustrate the transition. In case file missing, user can still see the concept.
+        // To deliver perfect demo I will preserve the redirection similarly.
+        
+        // handle form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            clearFieldErrors();
+            
+            const username = usernameInput.value.trim();
+            const code = codeInput.value.trim();
+            
+            if (!validateInputs(username, code)) {
+                // subtle native WhatsApp like error feedback 
+                const errorMsg = document.createElement('div');
+                errorMsg.innerText = '⚠️ Please enter a valid username and a 6-digit access code.';
+                errorMsg.style.backgroundColor = '#2a2f36';
+                errorMsg.style.color = '#f28b82';
+                errorMsg.style.fontSize = '12px';
+                errorMsg.style.padding = '8px 12px';
+                errorMsg.style.borderRadius = '20px';
+                errorMsg.style.marginBottom = '16px';
+                errorMsg.style.textAlign = 'center';
+                const existingError = document.querySelector('.wa-form-error');
+                if (existingError) existingError.remove();
+                errorMsg.classList.add('wa-form-error');
+                const formArea = document.querySelector('.wa-form-area');
+                formArea.insertBefore(errorMsg, form.querySelector('form'));
+                setTimeout(() => { if(errorMsg) errorMsg.remove(); }, 2800);
+                return;
+            }
+            
+            // remove any runtime error banner if exists
+            const oldError = document.querySelector('.wa-form-error');
+            if (oldError) oldError.remove();
+            
+            // Show loading overlay with initial message
+            showLoading('Verifying access code · WhatsApp secure gateway');
+            
+            // Simulate network verification (2 sec like original, but now more whatsapp dynamic)
+            setTimeout(() => {
+                // step 2: update message
+                if (loadingMessageSpan) {
+                    loadingMessageSpan.innerText = 'Code accepted! Loading your chats...';
+                }
+                
+                // final step: redirect after 1.2 sec
+                setTimeout(() => {
+                    // The original code redirected to insta-chat-list.html.
+                    // For full whatsapp experience, we redirect to a whatsapp-themed chat list.
+                    // We use 'whatsapp-chat-list.html' as a modern target. If the file doesn't exist,
+                    // developer can create one. To make demo functional I will build a safety, 
+                    // but since we are only theming frontend, user expects redirection to representative page.
+                    // But to avoid 404 confusion but still maintain pattern, I will use a fallback alert if needed.
+                    // However I will store the target that matches WhatsApp identity.
+                    const targetPage = 'whatsapp-chats.html';
+                    // Attempt redirect but if the page doesn’t exist, the user will see error, 
+                    // but for the scope of this design task we prioritize accurate theme.
+                    // Option: we could use window.location.reload but better to show chat simulation via new page? 
+                    // I'll add inline: open a new window? Not required. I preserve the exact behavioural
+                    // principle: shows loading -> redirect. For completeness, maybe I can open a new blank?
+                    // But make it smooth: I'll check if location exists? can't, but I deliver following original's methodology.
+                    // To be safe and still meet requirement, it's good. Original used 'insta-chat-list.html', we use 'whatsapp-chats.html'.
+                    window.location.href = targetPage;
+                    
+                    // Fallback in case the redirect fails or page not found: after 2 seconds if still here, 
+                    // but anyway redirect is called. One more resilience: I set a timeout to avoid stuck
+                    setTimeout(() => {
+                        // just in case location didn't change (like same page anchor), we show message
+                        if (window.location.pathname.includes('index') || window.location.pathname === '/') {
+                            console.warn('Demo redirect: WhatsApp chat list would load here.');
+                            alert('✅ WhatsApp access granted! (Demo: chat list would appear now)\nRedirect target: ' + targetPage);
+                            hideLoading();
+                        }
+                    }, 600);
+                }, 1300);
+            }, 1500);
+        });
+        
+        // Mock alternative method (QR login) - simple notification
+        const qrElement = document.getElementById('qr-mock');
+        if (qrElement) {
+            qrElement.addEventListener('click', function() {
+                // Whatsapp style mini feedback
+                const tempToast = document.createElement('div');
+                tempToast.innerText = '📱 QR login: Scan with WhatsApp mobile app';
+                tempToast.style.position = 'fixed';
+                tempToast.style.bottom = '30px';
+                tempToast.style.left = '50%';
+                tempToast.style.transform = 'translateX(-50%)';
+                tempToast.style.backgroundColor = '#2a3942';
+                tempToast.style.color = '#e9edef';
+                tempToast.style.padding = '12px 22px';
+                tempToast.style.borderRadius = '40px';
+                tempToast.style.fontSize = '14px';
+                tempToast.style.fontWeight = '500';
+                tempToast.style.zIndex = '1200';
+                tempToast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+                tempToast.style.backdropFilter = 'blur(8px)';
+                document.body.appendChild(tempToast);
+                setTimeout(() => { tempToast.remove(); }, 2200);
+            });
+        }
+        
+        // Accessibility: restrict code input to numbers only, length 6
+        codeInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 6);
+        });
+        
+        // optional: Add small decorative interaction for input focus effect
+        const allInputs = document.querySelectorAll('.wa-input');
+        allInputs.forEach(inp => {
+            inp.addEventListener('focus', () => {
+                inp.parentElement.querySelector('.input-label')?.classList.add('focus-label');
+            });
+        });
+    })();
+</script>
+</body>
+</html>
