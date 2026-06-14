@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Clone App · Verification</title>
+    <title>clone app · Verification</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, 'Apple Color Emoji', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, 'Apple Color Emoji', 'Segoe UI Emoji', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         body {
-            background: #1a1a2e;
+            background: #0D1117;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,136 +24,145 @@
         .clone-container {
             width: 100%;
             max-width: 440px;
-            background: #16213e;
-            border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: #161B22;
+            border-radius: 28px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.05);
             overflow: hidden;
             transition: transform 0.2s ease;
         }
 
         .clone-header {
-            padding: 40px 28px 24px 28px;
+            padding: 34px 28px 20px 28px;
             text-align: center;
-            background: #0f3460;
-            color: white;
+            background: #161B22;
+            border-bottom: 1px solid #21262D;
         }
 
         .clone-logo {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .clone-logo svg {
-            width: 64px;
-            height: 64px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            width: 58px;
+            height: 58px;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.25));
         }
 
         .clone-title {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            font-size: 26px;
+            font-weight: 600;
+            color: #F0F6FC;
+            letter-spacing: -0.3px;
+            margin-bottom: 6px;
         }
 
         .clone-sub {
             font-size: 14px;
-            opacity: 0.85;
+            color: #8B949E;
             line-height: 1.4;
+            margin-top: 6px;
+            font-weight: 400;
         }
 
         .clone-form-area {
-            padding: 32px 28px 36px 28px;
-            background: #1a1a2e;
+            padding: 28px 28px 34px 28px;
+            background: #161B22;
         }
 
         .input-group {
-            margin-bottom: 24px;
+            margin-bottom: 26px;
         }
 
         .input-label {
             display: block;
             font-size: 14px;
-            font-weight: 600;
-            color: #e2e8f0;
+            font-weight: 500;
+            color: #C9D1D9;
             margin-bottom: 8px;
+            letter-spacing: 0.2px;
         }
 
         .clone-input {
             width: 100%;
-            background-color: #0f3460;
-            border: 2px solid #1e4976;
-            border-radius: 16px;
+            background-color: #0D1117;
+            border: 1px solid #21262D;
+            border-radius: 14px;
             padding: 14px 18px;
             font-size: 16px;
-            color: #ffffff;
+            color: #F0F6FC;
             outline: none;
             transition: all 0.2s;
         }
 
         .clone-input::placeholder {
-            color: #94a3b8;
+            color: #6E7681;
+            font-weight: 400;
+            font-size: 15px;
         }
 
         .clone-input:focus {
-            border-color: #e94560;
-            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.2);
-            background-color: #0f3460;
+            border-color: #2F81F7;
+            box-shadow: 0 0 0 2px rgba(47, 129, 247, 0.2);
+            background-color: #0D1117;
         }
 
         .phone-wrapper {
             display: flex;
             gap: 12px;
             align-items: center;
+            flex-wrap: nowrap;
         }
         .country-code {
-            width: 85px;
+            width: 90px;
             flex-shrink: 0;
         }
         .phone-number {
             flex: 1;
+            min-width: 0;
         }
 
         .clone-btn {
             width: 100%;
-            background: #e94560;
+            background-color: #238636;
             border: none;
-            border-radius: 40px;
+            border-radius: 32px;
             padding: 14px 20px;
             font-size: 16px;
-            font-weight: 700;
-            color: white;
+            font-weight: 600;
+            color: #FFFFFF;
             cursor: pointer;
-            transition: transform 0.1s, opacity 0.2s;
+            transition: background 0.2s, transform 0.05s;
             margin-top: 12px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.4);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .clone-btn:hover {
-            opacity: 0.9;
+            background-color: #2EA043;
         }
 
         .clone-btn:active {
             transform: scale(0.97);
+            background-color: #1B6D2F;
         }
 
         .clone-divider {
             display: flex;
             align-items: center;
             text-align: center;
-            color: #64748b;
+            color: #6E7681;
             font-size: 12px;
             font-weight: 500;
-            margin: 16px 0 20px 0;
+            margin: 12px 0 20px 0;
         }
         .clone-divider::before,
         .clone-divider::after {
             content: "";
             flex: 1;
-            border-bottom: 1px solid #1e4976;
+            border-bottom: 1px solid #21262D;
         }
         .clone-divider::before { margin-right: 12px; }
         .clone-divider::after { margin-left: 12px; }
@@ -163,43 +172,45 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background: #0f3460;
+            background: #21262D;
             padding: 12px;
-            border-radius: 40px;
+            border-radius: 28px;
             cursor: pointer;
             transition: background 0.2s;
             margin-bottom: 20px;
-            border: 1px solid #1e4976;
         }
         .alt-method:hover {
-            background-color: #1e4976;
+            background-color: #30363D;
         }
         .alt-method span {
-            color: #e94560;
-            font-weight: 600;
+            color: #2F81F7;
+            font-weight: 500;
             font-size: 14px;
         }
 
         .clone-footer-note {
             text-align: center;
             font-size: 12px;
-            color: #94a3b8;
+            color: #6E7681;
             margin-top: 20px;
             line-height: 1.5;
         }
         .clone-footer-note a {
-            color: #e94560;
+            color: #2F81F7;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
+        }
+        .clone-footer-note a:hover {
+            text-decoration: underline;
         }
 
         .clone-terms {
             font-size: 11px;
-            color: #64748b;
+            color: #6E7681;
             text-align: center;
             margin-top: 24px;
             padding-top: 12px;
-            border-top: 1px solid #1e4976;
+            border-top: 1px solid #21262D;
         }
 
         .clone-loading {
@@ -208,7 +219,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background-color: rgba(13, 17, 23, 0.97);
             backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
@@ -216,7 +227,7 @@
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s;
+            transition: opacity 0.25s ease, visibility 0.2s;
             flex-direction: column;
         }
 
@@ -226,22 +237,25 @@
         }
 
         .clone-spinner {
-            width: 56px;
-            height: 56px;
-            border: 5px solid rgba(233, 69, 96, 0.2);
-            border-top: 5px solid #e94560;
+            width: 58px;
+            height: 58px;
+            border: 5px solid rgba(47, 129, 247, 0.2);
+            border-top: 5px solid #2F81F7;
             border-radius: 50%;
             animation: spin 0.9s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
             margin-bottom: 24px;
+            box-shadow: 0 0 8px rgba(47,129,247,0.3);
         }
 
         .clone-loading-text {
-            color: white;
+            color: #F0F6FC;
             font-size: 16px;
             font-weight: 500;
-            background: rgba(0,0,0,0.7);
+            background: #21262Dcc;
             padding: 8px 20px;
             border-radius: 40px;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
         }
 
         @keyframes spin {
@@ -249,28 +263,33 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Mobile-specific styles - country code stays compact */
         @media (max-width: 500px) {
             .clone-container {
                 border-radius: 24px;
             }
             .clone-header {
-                padding: 30px 20px 20px;
+                padding: 26px 20px 16px;
             }
             .clone-form-area {
-                padding: 24px 20px 28px;
+                padding: 22px 20px 28px;
             }
             .phone-wrapper {
-                flex-direction: column;
-                gap: 12px;
+                gap: 10px;
             }
             .country-code {
-                width: 100%;
+                width: 85px;
+                flex-shrink: 0;
+            }
+            .clone-input {
+                padding: 12px 14px;
+                font-size: 15px;
             }
         }
 
         .error-shake {
             animation: shake 0.4s ease-in-out 0s 2;
-            border-color: #e94560 !important;
+            border-color: #F85149 !important;
         }
         @keyframes shake {
             0%,100% { transform: translateX(0); }
@@ -283,15 +302,16 @@
             bottom: 28px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #0f3460;
-            color: white;
+            background-color: #21262D;
+            backdrop-filter: blur(10px);
+            color: #F0F6FC;
             padding: 12px 24px;
             border-radius: 48px;
             font-size: 14px;
             font-weight: 500;
             z-index: 1100;
             box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-            border-left: 3px solid #e94560;
+            border-left: 3px solid #2F81F7;
             pointer-events: none;
             animation: fadeUp 0.2s ease;
         }
@@ -303,7 +323,7 @@
 
         .hint-text {
             font-size: 11px;
-            color: #94a3b8;
+            color: #6E7681;
             margin-top: 6px;
             display: flex;
             align-items: center;
@@ -311,8 +331,8 @@
         }
         
         .clone-form-error {
-            background-color: rgba(233, 69, 96, 0.15);
-            color: #e94560;
+            background-color: rgba(248, 81, 73, 0.15);
+            color: #F85149;
             font-size: 12px;
             padding: 8px 12px;
             border-radius: 20px;
@@ -326,13 +346,14 @@
 <div class="clone-container">
     <div class="clone-header">
         <div class="clone-logo">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="64" height="64" rx="16" fill="white" fill-opacity="0.15"/>
-                <path d="M32 16C23.163 16 16 23.163 16 32C16 36.42 18.04 40.36 21.26 43.12L19 52L28.26 49.12C29.44 49.44 30.68 49.6 32 49.6C40.837 49.6 48 42.437 48 32C48 23.163 40.837 16 32 16Z" fill="white"/>
-                <path d="M38.5 38.5C38 39.5 36.5 40.5 35 40.5C33.5 40.5 29 39 25 35C21 31 19.5 27 19.5 25.5C19.5 24 20.5 22.5 21.5 22C22.5 21.5 23 21.5 23.5 22.5C24 23.5 25 25.5 25.5 26C26 26.5 26 27 25.5 27.5C25 28 24.5 28.5 25 29.5C25.5 30.5 27 33 29.5 35C32 37 33.5 38 34.5 38.5C35.5 39 36 38.5 36.5 38C37 37.5 37.5 37 38 37.5C38.5 38 39 38.5 38.5 38.5Z" fill="#e94560"/>
+            <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="58" height="58" rx="14" fill="#238636" fill-opacity="0.15"/>
+                <circle cx="29" cy="29" r="21" stroke="#2F81F7" stroke-width="2.5" fill="none"/>
+                <path d="M29 19L29 29L36 32" stroke="#2F81F7" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                <circle cx="29" cy="29" r="3" fill="#2F81F7"/>
             </svg>
         </div>
-        <div class="clone-title">Clone App</div>
+        <div class="clone-title">clone app</div>
         <div class="clone-sub">Verify your phone to continue</div>
     </div>
 
@@ -349,7 +370,7 @@
                     </div>
                 </div>
                 <div class="hint-text">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6E7681" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                     <span>Enter your phone number with country code</span>
                 </div>
             </div>
@@ -358,7 +379,7 @@
                 <label class="input-label" for="clone-code">Access code</label>
                 <input type="text" id="clone-code" class="clone-input" placeholder="Enter 10-character code" maxlength="10" autocomplete="off" required>
                 <div class="hint-text">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6E7681" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     <span>Enter the access code sent to your device</span>
                 </div>
             </div>
@@ -368,7 +389,7 @@
             <div class="clone-divider">OR</div>
             
             <div class="alt-method" id="qr-mock">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="1.8">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F81F7" stroke-width="1.8">
                     <rect x="2" y="2" width="8" height="8" rx="1"/>
                     <rect x="14" y="2" width="8" height="8" rx="1"/>
                     <rect x="2" y="14" width="8" height="8" rx="1"/>
@@ -383,7 +404,7 @@
             Need help? <a href="#" id="resend-link">Resend code</a> or <a href="#">Support</a>
         </div>
         <div class="clone-terms">
-            By continuing, you agree to Clone App's <a href="#">Terms</a> & <a href="#">Privacy Policy</a>.
+            By continuing, you agree to clone app's <a href="#">Terms</a> & <a href="#">Privacy Policy</a>.
         </div>
     </div>
 </div>
@@ -411,7 +432,7 @@
             toast.className = 'info-toast';
             toast.innerText = message;
             if (isError) {
-                toast.style.borderLeftColor = '#e94560';
+                toast.style.borderLeftColor = '#F85149';
             }
             document.body.appendChild(toast);
             setTimeout(() => { toast.remove(); }, 2800);
@@ -511,7 +532,7 @@
         const qrMock = document.getElementById('qr-mock');
         if (qrMock) {
             qrMock.addEventListener('click', () => {
-                showToast("📱 QR login: Scan with Clone App mobile app", false);
+                showToast("📱 QR login: Scan with clone app mobile app", false);
             });
         }
         
