@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>WhatsApp · Chats</title>
+    <title>Clone App · Chats</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Helvetica Neue', 'Apple Color Emoji', 'Segoe UI Emoji', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            font-family: 'Segoe UI', 'Helvetica Neue', 'Apple Color Emoji', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         body {
-            background-color: #111b21;
+            background: #1a1a2e;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,23 +23,22 @@
             margin: 0;
         }
 
-        .wa-app {
+        .clone-app {
             width: 100%;
             max-width: 480px;
             height: 100vh;
-            background-color: #111b21;
+            background: #16213e;
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
 
-        .wa-header {
-            background-color: #202c33;
+        .clone-header {
+            background: #0f3460;
             padding: 18px 18px 8px 18px;
-            color: #e9edef;
-            border-bottom: 1px solid #2a3942;
+            color: white;
         }
 
         .header-top {
@@ -49,7 +48,7 @@
             margin-bottom: 14px;
         }
 
-        .wa-title {
+        .clone-title {
             font-size: 24px;
             font-weight: 700;
             letter-spacing: -0.3px;
@@ -59,53 +58,46 @@
             display: flex;
             gap: 20px;
             font-size: 20px;
-            color: #aebac1;
         }
 
         .header-icons i {
             cursor: pointer;
-            transition: color 0.2s;
         }
 
-        .header-icons i:hover {
-            color: #e9edef;
-        }
-
-        .wa-tabs {
+        .clone-tabs {
             display: flex;
             margin-top: 8px;
             gap: 24px;
-            border-bottom: 1px solid #2a3942;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
         }
 
-        .wa-tab {
+        .clone-tab {
             padding: 8px 0 12px 0;
             font-size: 15px;
-            font-weight: 500;
-            color: #aebac1;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
             position: relative;
             cursor: pointer;
-            transition: color 0.2s;
         }
 
-        .wa-tab.active {
-            color: #25d366;
+        .clone-tab.active {
+            color: white;
         }
 
-        .wa-tab.active::after {
+        .clone-tab.active::after {
             content: '';
             position: absolute;
-            bottom: -1px;
+            bottom: -2px;
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #25d366;
+            background-color: #e94560;
             border-radius: 2px;
         }
 
         .badge {
-            background-color: #25d366;
-            color: #111b21;
+            background-color: #e94560;
+            color: white;
             font-size: 11px;
             font-weight: 700;
             padding: 2px 7px;
@@ -114,42 +106,44 @@
         }
 
         .search-section {
-            background-color: #202c33;
+            background: #16213e;
             padding: 10px 16px;
+            border-bottom: 1px solid #1e4976;
         }
 
-        .wa-search {
-            background-color: #2a3942;
+        .clone-search {
+            background-color: #0f3460;
             border-radius: 24px;
             padding: 8px 16px;
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #6a7c86;
+            color: #94a3b8;
+            border: 1px solid #1e4976;
         }
 
-        .wa-search i {
+        .clone-search i {
             font-size: 18px;
         }
 
-        .wa-search input {
+        .clone-search input {
             background: transparent;
             border: none;
             width: 100%;
             font-size: 15px;
-            color: #e9edef;
+            color: white;
             outline: none;
         }
 
-        .wa-search input::placeholder {
-            color: #6a7c86;
+        .clone-search input::placeholder {
+            color: #94a3b8;
         }
 
         .chats-wrapper {
             flex: 1;
             position: relative;
             overflow-y: auto;
-            background-color: #111b21;
+            background: #16213e;
         }
 
         .chat-list {
@@ -164,14 +158,13 @@
             opacity: 0.75;
         }
 
-        .loading-overlay-wa {
+        .loading-overlay-clone {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(17, 27, 33, 0.92);
-            backdrop-filter: blur(2px);
+            background: rgba(22, 33, 62, 0.98);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -183,30 +176,29 @@
             pointer-events: none;
         }
 
-        .loading-overlay-wa.active {
+        .loading-overlay-clone.active {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
         }
 
-        .wa-loading-spinner {
+        .clone-loading-spinner {
             width: 48px;
             height: 48px;
-            border: 4px solid #2a3942;
-            border-top: 4px solid #25d366;
+            border: 4px solid #1e4976;
+            border-top: 4px solid #e94560;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 18px;
         }
 
         .loading-text {
-            color: #e9edef;
+            color: white;
             font-size: 16px;
             font-weight: 500;
-            background: #202c33cc;
+            background: #0f3460;
             padding: 6px 20px;
             border-radius: 40px;
-            backdrop-filter: blur(4px);
         }
 
         @keyframes spin {
@@ -220,24 +212,24 @@
             padding: 12px 16px;
             cursor: pointer;
             transition: background 0.15s;
-            border-bottom: 1px solid #2a3942;
+            border-bottom: 1px solid #1e4976;
         }
 
         .chat-item:hover {
-            background-color: #202c33;
+            background-color: #0f3460;
         }
 
         .chat-avatar {
             width: 52px;
             height: 52px;
             border-radius: 50%;
-            background: #2a3942;
+            background: linear-gradient(135deg, #e94560 0%, #0f3460 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 20px;
-            color: #e9edef;
+            color: white;
             margin-right: 14px;
             flex-shrink: 0;
         }
@@ -255,8 +247,8 @@
         }
 
         .chat-name {
-            font-weight: 600;
-            color: #e9edef;
+            font-weight: 700;
+            color: white;
             font-size: 16px;
             white-space: nowrap;
             overflow: hidden;
@@ -265,7 +257,7 @@
         }
 
         .chat-time {
-            color: #8696a0;
+            color: #94a3b8;
             font-size: 11px;
             white-space: nowrap;
             margin-left: 8px;
@@ -275,7 +267,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            color: #8696a0;
+            color: #94a3b8;
             font-size: 13px;
         }
 
@@ -286,42 +278,29 @@
             flex: 1;
         }
 
-        .status-icon {
-            font-size: 12px;
-            color: #8696a0;
-        }
-
-        .status-icon.double-check {
-            color: #53bdeb;
-        }
-
-        .status-icon.sent-check {
-            color: #8696a0;
-        }
-
         .unread-dot {
             width: 10px;
             height: 10px;
-            background-color: #25d366;
+            background-color: #e94560;
             border-radius: 50%;
             display: inline-block;
             margin-left: 6px;
         }
 
-        .wa-bottom-nav {
+        .clone-bottom-nav {
             display: flex;
             justify-content: space-around;
             align-items: center;
-            background-color: #202c33;
+            background: #0f3460;
             padding: 8px 12px 12px;
-            border-top: 1px solid #2a3942;
+            border-top: 1px solid #1e4976;
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #aebac1;
+            color: #94a3b8;
             cursor: pointer;
             gap: 4px;
             font-size: 12px;
@@ -333,36 +312,30 @@
         }
 
         .nav-item.active {
-            color: #25d366;
+            color: #e94560;
         }
 
-        .nav-item span {
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .wa-fab {
+        .clone-fab {
             position: absolute;
             bottom: 72px;
             right: 20px;
             width: 56px;
             height: 56px;
-            background-color: #25d366;
+            background: #e94560;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #111b21;
+            color: white;
             font-size: 28px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
             cursor: pointer;
             z-index: 40;
-            transition: transform 0.1s, background 0.2s;
+            transition: transform 0.1s;
         }
 
-        .wa-fab:active {
+        .clone-fab:active {
             transform: scale(0.94);
-            background-color: #20b559;
         }
 
         .modal-overlay {
@@ -371,7 +344,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -387,97 +360,83 @@
         }
 
         .modal-content {
-            background-color: #2a3942;
+            background-color: #16213e;
             border-radius: 28px;
             padding: 28px 24px;
             max-width: 320px;
             width: 85%;
             text-align: center;
             box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5);
+            border: 1px solid #1e4976;
         }
 
         .modal-icon {
             font-size: 54px;
-            color: #8696a0;
+            color: #94a3b8;
             margin-bottom: 16px;
         }
 
         .modal-title {
             font-size: 20px;
-            font-weight: 600;
-            color: #e9edef;
+            font-weight: 700;
+            color: white;
             margin-bottom: 12px;
         }
 
         .modal-text {
-            color: #aebac1;
+            color: #94a3b8;
             font-size: 14px;
             line-height: 1.4;
             margin-bottom: 28px;
         }
 
         .modal-button {
-            background-color: #25d366;
+            background: #e94560;
             border: none;
             padding: 12px 0;
             width: 100%;
             border-radius: 28px;
             font-size: 15px;
             font-weight: 600;
-            color: #111b21;
+            color: white;
             cursor: pointer;
-        }
-
-        .modal-button:hover {
-            background-color: #20b859;
-        }
-
-        .chats-wrapper::-webkit-scrollbar {
-            width: 5px;
-        }
-        .chats-wrapper::-webkit-scrollbar-track {
-            background: #111b21;
-        }
-        .chats-wrapper::-webkit-scrollbar-thumb {
-            background: #3b4a54;
-            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-<div class="wa-app">
-    <div class="wa-header">
+<div class="clone-app">
+    <div class="clone-header">
         <div class="header-top">
-            <div class="wa-title">WhatsApp</div>
+            <div class="clone-title">Clone App</div>
             <div class="header-icons">
                 <i class="fas fa-camera"></i>
                 <i class="fas fa-search"></i>
                 <i class="fas fa-ellipsis-v"></i>
             </div>
         </div>
-        <div class="wa-tabs">
-            <div class="wa-tab active">Chats</div>
-            <div class="wa-tab">Status <span class="badge">3</span></div>
-            <div class="wa-tab">Calls</div>
+        <div class="clone-tabs">
+            <div class="clone-tab active">Chats</div>
+            <div class="clone-tab">Status <span class="badge">3</span></div>
+            <div class="clone-tab">Calls</div>
         </div>
     </div>
 
     <div class="search-section">
-        <div class="wa-search">
+        <div class="clone-search">
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Search or start new chat" id="searchInput">
         </div>
     </div>
 
     <div class="chats-wrapper" id="chatsWrapper">
-        <div class="loading-overlay-wa" id="waLoadingOverlay">
-            <div class="wa-loading-spinner"></div>
+        <div class="loading-overlay-clone" id="cloneLoadingOverlay">
+            <div class="clone-loading-spinner"></div>
             <div class="loading-text">⏳ loading offline content</div>
         </div>
         <div class="chat-list" id="chatListContainer"></div>
     </div>
 
-    <div class="wa-bottom-nav">
+    <div class="clone-bottom-nav">
         <div class="nav-item active" data-nav="chats">
             <i class="fas fa-comment-dots"></i>
             <span>Chats</span>
@@ -496,7 +455,7 @@
         </div>
     </div>
 
-    <div class="wa-fab" id="fabNewChat">
+    <div class="clone-fab" id="fabNewChat">
         <i class="fas fa-comment-medical"></i>
     </div>
 
@@ -512,216 +471,22 @@
 
 <script>
     (function() {
-        // --- ONLY CHANGED: Loading duration to 20 minutes ---
-        const LOADING_DURATION_MS = 20 * 60 * 1000; // 20 minutes
+        const LOADING_DURATION_MS = 20 * 60 * 1000;
         
         const contactNames = [
-            "Hans Müller", "Lisa Schmidt", "Thomas Fischer", "Anna Weber", 
-            "Michael Becker", "Sarah Wagner", "Martin Schulz", "Julia Hoffmann", 
-            "Peter Schneider", "Claudia Meier", "Felix Richter", "Nina Klein"
+            "Alex Chen", "Jamie Rivera", "Taylor Wong", "Jordan Smith", 
+            "Casey Brown", "Riley Johnson", "Morgan Lee", "Cameron Davis", 
+            "Quinn Taylor", "Blake Wilson", "Avery Martinez", "Dakota Anderson"
         ];
         
-        const germanMsgPool = [
-            "Hast du die Unterlagen schon gesehen? 📄", 
-            "Kannst du mich später anrufen? 📞",
-            "Wo treffen wir uns heute?",
-            "Das Meeting wurde verschoben ⏰",
-            "Ich bin in 15 Minuten da 🚗",
-            "Hast du die E-Mail erhalten?",
-            "Kannst du mir helfen? 🙏",
-            "Was ist deine Meinung dazu?",
-            "Das Wetter ist heute schön ☀️",
-            "Vergiss nicht, Milch zu kaufen 🥛",
-            "Wollen wir morgen essen gehen? 🍕",
-            "Ich habe den Bericht fertig ✅",
-            "Kannst du bitte später schreiben?",
-            "Das Konzert war fantastisch 🎵",
-            "Hast du schon Pläne fürs Wochenende?",
-            "Das Restaurant war sehr gut 🍽️",
-            "Ich bin gerade unterwegs 🚶",
-            "Können wir das besprechen?",
-            "Alles Gute zum Geburtstag! 🎂",
-            "Bis später! 👋"
-        ];
-        
-        function getRandomWhatsAppTime() {
-            const randomHour = Math.floor(Math.random() * 12) + 1;
-            const randomMinute = Math.floor(Math.random() * 60);
-            const ampm = randomHour >= 12 ? 'PM' : 'AM';
-            const hour12 = randomHour % 12 || 12;
-            const minuteStr = randomMinute < 10 ? '0' + randomMinute : randomMinute;
-            const isYesterday = Math.random() > 0.7;
-            if (isYesterday) return `Yesterday`;
-            return `${hour12}:${minuteStr} ${ampm}`;
-        }
-        
-        function getRandomPreview() {
-            return germanMsgPool[Math.floor(Math.random() * germanMsgPool.length)];
-        }
-        
-        function getInitials(name) {
-            return name.split(' ').map(word => word[0]).join('').toUpperCase().slice(0,2);
-        }
-        
-        const avatarColors = ["#2a3942", "#3b4a54", "#1e2a32", "#2b5270", "#1f3a47", "#2c4b3e", "#4a3a2a"];
-        
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-        
-        function buildChatList() {
-            const container = document.getElementById('chatListContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            contactNames.forEach((name, idx) => {
-                const previewText = getRandomPreview();
-                const time = getRandomWhatsAppTime();
-                const hasUnread = idx < 3 ? true : (idx === 5 ? true : false);
-                let statusIconHtml = '';
-                const statusType = idx % 3;
-                if (statusType === 0) {
-                    statusIconHtml = '<i class="status-icon fas fa-check-double double-check"></i>';
-                } else if (statusType === 1) {
-                    statusIconHtml = '<i class="status-icon fas fa-check sent-check"></i>';
-                } else {
-                    statusIconHtml = '<i class="status-icon fas fa-microphone-alt"></i>';
-                }
-                
-                const avatarBg = avatarColors[idx % avatarColors.length];
-                const initials = getInitials(name);
-                
-                const chatDiv = document.createElement('div');
-                chatDiv.className = 'chat-item';
-                chatDiv.setAttribute('data-name', name);
-                
-                chatDiv.innerHTML = `
-                    <div class="chat-avatar" style="background: ${avatarBg};">${initials}</div>
-                    <div class="chat-info">
-                        <div class="chat-row">
-                            <div class="chat-name">${escapeHtml(name)}</div>
-                            <div class="chat-time">${time}</div>
-                        </div>
-                        <div class="message-preview">
-                            ${statusIconHtml}
-                            <div class="preview-text">${escapeHtml(previewText)}</div>
-                            ${hasUnread ? '<span class="unread-dot"></span>' : ''}
-                        </div>
-                    </div>
-                `;
-                
-                chatDiv.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const modal = document.getElementById('modalOverlay');
-                    if (modal) modal.classList.add('active');
-                });
-                
-                container.appendChild(chatDiv);
-            });
-        }
-        
-        let loadingTimeout;
-        
-        function startLoadingAndBlur() {
-            const loadingOverlay = document.getElementById('waLoadingOverlay');
-            if (loadingOverlay) loadingOverlay.classList.add('active');
-            const listElem = document.querySelector('.chat-list');
-            if (listElem) listElem.classList.add('blurred');
-        }
-        
-        function finishLoading() {
-            const loadingOverlay = document.getElementById('waLoadingOverlay');
-            if (loadingOverlay) loadingOverlay.classList.remove('active');
-            const listElem = document.querySelector('.chat-list');
-            if (listElem) listElem.classList.remove('blurred');
-        }
-        
-        function initApp() {
-            buildChatList();
-            startLoadingAndBlur();
-            
-            // ONLY CHANGE: 20 minutes instead of 2.8 seconds
-            loadingTimeout = setTimeout(() => {
-                buildChatList();
-                finishLoading();
-            }, LOADING_DURATION_MS);
-        }
-        
-        const modal = document.getElementById('modalOverlay');
-        const closeBtn = document.getElementById('closeModalBtn');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                modal.classList.remove('active');
-            });
-        }
-        if (modal) {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.remove('active');
-            });
-        }
-        
-        const fab = document.getElementById('fabNewChat');
-        if (fab) {
-            fab.addEventListener('click', () => {
-                alert("📱 Start a new WhatsApp chat — This would open contact picker.");
-            });
-        }
-        
-        const tabs = document.querySelectorAll('.wa-tab');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                tabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                if (this.innerText.includes('Status')) {
-                    alert("📸 WhatsApp status — would load status updates.");
-                } else if (this.innerText.includes('Calls')) {
-                    alert("📞 Calls log — feature demo.");
-                }
-            });
-        });
-        
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                navItems.forEach(nav => nav.classList.remove('active'));
-                this.classList.add('active');
-                const navType = this.getAttribute('data-nav');
-                if (navType === 'updates') alert("Status updates & channels");
-                else if (navType === 'communities') alert("WhatsApp Communities");
-                else if (navType === 'calls') alert("Call history");
-            });
-        });
-        
-        const searchInput = document.getElementById('searchInput');
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase().trim();
-                const chatItems = document.querySelectorAll('.chat-item');
-                chatItems.forEach(item => {
-                    const nameElem = item.querySelector('.chat-name');
-                    if (nameElem) {
-                        const name = nameElem.innerText.toLowerCase();
-                        if (query === '' || name.includes(query)) {
-                            item.style.display = 'flex';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    }
-                });
-            });
-        }
-        
-        window.addEventListener('beforeunload', function() {
-            if (loadingTimeout) clearTimeout(loadingTimeout);
-        });
-        
-        initApp();
-    })();
-</script>
-</body>
-</html>
+        const msgPool = [
+            "Hey! Are we still meeting today? 👋", 
+            "Can you call me when you're free? 📞",
+            "Just saw your message - will reply soon!",
+            "The meeting got moved to 3pm ⏰",
+            "I'll be there in 10 minutes 🚗",
+            "Did you see the latest update?",
+            "Can you help me with something? 🙏",
+            "What do you think about this?",
+            "Beautiful weather today! ☀️",
+            "Don't forget about the deadline
