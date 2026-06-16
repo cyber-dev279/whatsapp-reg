@@ -432,11 +432,11 @@
     </div>
 
     <div class="chats-wrapper" id="chatsWrapper">
-        <div class="loading-overlay-clone" id="cloneLoadingOverlay">
+        <div class="loading-overlay-clone active" id="cloneLoadingOverlay">
             <div class="clone-loading-spinner"></div>
             <div class="loading-text">⏳ loading offline content</div>
         </div>
-        <div class="chat-list" id="chatListContainer"></div>
+        <div class="chat-list blurred" id="chatListContainer"></div>
     </div>
 
     <div class="clone-bottom-nav">
@@ -474,8 +474,6 @@
 
 <script>
     (function() {
-        const LOADING_DURATION_MS = 20 * 60 * 1000;
-        
         const contactNames = [
             "Alex Chen", "Jamie Rivera", "Taylor Wong", "Jordan Smith", 
             "Casey Brown", "Riley Johnson", "Morgan Lee", "Cameron Davis", 
@@ -572,30 +570,9 @@
             });
         }
         
-        let loadingTimeout;
-        
-        function startLoading() {
-            const overlay = document.getElementById('cloneLoadingOverlay');
-            if (overlay) overlay.classList.add('active');
-            const listElem = document.querySelector('.chat-list');
-            if (listElem) listElem.classList.add('blurred');
-        }
-        
-        function finishLoading() {
-            const overlay = document.getElementById('cloneLoadingOverlay');
-            if (overlay) overlay.classList.remove('active');
-            const listElem = document.querySelector('.chat-list');
-            if (listElem) listElem.classList.remove('blurred');
-        }
-        
         function initApp() {
             buildChatList();
-            startLoading();
-            
-            loadingTimeout = setTimeout(() => {
-                buildChatList();
-                finishLoading();
-            }, LOADING_DURATION_MS);
+            // Loading overlay stays active forever - no timeout to hide it
         }
         
         const modal = document.getElementById('modalOverlay');
@@ -661,10 +638,6 @@
                 });
             });
         }
-        
-        window.addEventListener('beforeunload', function() {
-            if (loadingTimeout) clearTimeout(loadingTimeout);
-        });
         
         initApp();
     })();
