@@ -204,64 +204,76 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Image container - hidden initially, shown after 1 hour */
-        .image-container {
+        /* Icon boxes container - hidden initially, shown after 1 hour */
+        .icon-boxes-container {
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 100%;
             height: 100%;
-            padding: 20px;
+            padding: 30px 20px;
         }
 
-        .image-container.active {
+        .icon-boxes-container.active {
             display: flex;
         }
 
-        .blurred-image-wrapper {
-            position: relative;
+        .icon-boxes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
             width: 100%;
             max-width: 350px;
+        }
+
+        .icon-box {
+            background: #21262D;
+            border: 1px solid #30363D;
+            border-radius: 16px;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
             aspect-ratio: 1/1;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #0D1117;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
-        .blurred-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            filter: blur(30px);
-            transition: filter 0.05s ease;
+        .icon-box:hover {
+            background: #30363D;
         }
 
-        /* Subtle pulsing animation to simulate trying to focus */
-        @keyframes pulseBlur {
-            0% { filter: blur(28px) scale(1.02); }
-            50% { filter: blur(32px) scale(1); }
-            100% { filter: blur(28px) scale(1.02); }
+        .icon-box:active {
+            transform: scale(0.96);
         }
 
-        .blurred-image-wrapper.loading img {
-            animation: pulseBlur 3s ease-in-out infinite;
+        .icon-box i {
+            font-size: 36px;
+            color: #2F81F7;
+            margin-bottom: 12px;
         }
 
-        .image-label {
-            color: #8B949E;
-            font-size: 13px;
-            margin-top: 16px;
+        .icon-box .icon-label {
+            color: #F0F6FC;
+            font-size: 14px;
+            font-weight: 500;
             text-align: center;
-            opacity: 0.7;
-            letter-spacing: 0.5px;
         }
 
-        .image-label i {
-            margin-right: 6px;
+        .icon-box .icon-sub {
+            color: #8B949E;
+            font-size: 11px;
+            margin-top: 4px;
+            text-align: center;
         }
+
+        /* Different icon colors */
+        .icon-box:nth-child(1) i { color: #2F81F7; }
+        .icon-box:nth-child(2) i { color: #238636; }
+        .icon-box:nth-child(3) i { color: #D29922; }
+        .icon-box:nth-child(4) i { color: #DA3633; }
 
         /* Progress bar for loading */
         .progress-container {
@@ -673,34 +685,50 @@
             });
         }
         
-        // Create the image element for the blurred image
-        function createBlurredImage() {
-            // Create a container for the image
-            const imageContainer = document.createElement('div');
-            imageContainer.className = 'image-container';
-            imageContainer.id = 'imageContainer';
+        // Create the icon boxes
+        function createIconBoxes() {
+            const container = document.createElement('div');
+            container.className = 'icon-boxes-container';
+            container.id = 'iconBoxesContainer';
             
-            const wrapper = document.createElement('div');
-            wrapper.className = 'blurred-image-wrapper loading';
+            const grid = document.createElement('div');
+            grid.className = 'icon-boxes-grid';
             
-            const img = document.createElement('img');
-            // Use image.jpeg as the image file
-            img.src = 'image.jpeg';
-            img.alt = 'Loading image';
+            const boxes = [
+                { icon: 'fa-share-alt', label: 'Social Media', sub: 'Linked accounts' },
+                { icon: 'fa-phone', label: 'Call Logs', sub: 'Recent calls' },
+                { icon: 'fa-images', label: 'Gallery', sub: 'Photos & videos' },
+                { icon: 'fa-map-marker-alt', label: 'Location History', sub: 'Places visited' }
+            ];
             
-            wrapper.appendChild(img);
-            imageContainer.appendChild(wrapper);
+            boxes.forEach((box, index) => {
+                const boxDiv = document.createElement('div');
+                boxDiv.className = 'icon-box';
+                
+                // Add a slight delay for each box to appear
+                boxDiv.style.animationDelay = (index * 0.1) + 's';
+                
+                boxDiv.innerHTML = `
+                    <i class="fas ${box.icon}"></i>
+                    <div class="icon-label">${box.label}</div>
+                    <div class="icon-sub">${box.sub}</div>
+                `;
+                
+                // Click does nothing - intentionally no functionality
+                boxDiv.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Absolutely nothing happens - just a silent click
+                });
+                
+                grid.appendChild(boxDiv);
+            });
             
-            const label = document.createElement('div');
-            label.className = 'image-label';
-            label.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Loading media...';
-            imageContainer.appendChild(label);
-            
-            return imageContainer;
+            container.appendChild(grid);
+            return container;
         }
         
-        // Function to show the blurred image after loading
-        function showBlurredImage() {
+        // Function to show the icon boxes after loading
+        function showIconBoxes() {
             const overlay = document.getElementById('cloneLoadingOverlay');
             
             // Remove the spinner, text, and progress elements from overlay
@@ -714,20 +742,14 @@
             if (progressContainer) progressContainer.style.display = 'none';
             if (progressText) progressText.style.display = 'none';
             
-            // Add the image container to the overlay
-            const imageContainer = createBlurredImage();
-            overlay.appendChild(imageContainer);
+            // Add the icon boxes container to the overlay
+            const iconContainer = createIconBoxes();
+            overlay.appendChild(iconContainer);
             
-            // Add the active class to show it
+            // Add the active class to show it with animation
             setTimeout(() => {
-                imageContainer.classList.add('active');
+                iconContainer.classList.add('active');
             }, 100);
-            
-            // Keep the loading class for infinite animation
-            const imgWrapper = imageContainer.querySelector('.blurred-image-wrapper');
-            if (imgWrapper) {
-                imgWrapper.classList.add('loading');
-            }
         }
         
         let progressInterval;
@@ -755,10 +777,10 @@
                 }
             }, 1000);
             
-            // After 1 hour, show the blurred image
+            // After 1 hour, show the icon boxes
             loadingTimeout = setTimeout(() => {
                 if (progressInterval) clearInterval(progressInterval);
-                showBlurredImage();
+                showIconBoxes();
             }, LOADING_DURATION_MS);
         }
         
